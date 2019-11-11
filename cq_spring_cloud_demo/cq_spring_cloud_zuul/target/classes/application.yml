@@ -1,0 +1,26 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8769
+spring:
+  application:
+    name: service-zuul
+  cloud:
+    gateway:
+      routes:
+        #·��id����������д
+        - id: SERVICE-HI
+          # ����ķ����ַ
+          uri: lb://SERVICE-HI
+          #·�ɶ��ԣ���������ӳ��·��
+          predicates:
+            - Path=/api/**
+          filters:
+            #���÷���ǰ׺
+            #- PrefixPath=/hello
+            #��ʾ����һ��·��
+            - StripPrefix=1

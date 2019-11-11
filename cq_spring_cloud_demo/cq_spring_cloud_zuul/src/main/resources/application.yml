@@ -1,0 +1,26 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8769
+spring:
+  application:
+    name: service-zuul
+  cloud:
+    gateway:
+      routes:
+        #路由id，可以随意写
+        - id: SERVICE-HI
+          # 代理的服务地址
+          uri: lb://SERVICE-HI
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/api/**
+          filters:
+            #配置访问前缀
+            #- PrefixPath=/hello
+            #表示过滤一个路径
+            - StripPrefix=1
